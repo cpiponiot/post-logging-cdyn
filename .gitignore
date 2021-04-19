@@ -37,3 +37,9 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+# large csv files 
+data/paracou.csv
+
+# Rproj
+*.Rproj
