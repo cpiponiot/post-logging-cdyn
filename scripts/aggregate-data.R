@@ -140,23 +140,22 @@ cdata = stand_dynamics(id = data$idtree,
 ## standardize by ha ##
 cdata[, `:=`(plot = as.numeric(plot), 
              agb = stock/6.25, 
-             awp = gain/6.25, 
-             awm = loss/6.25)]
+             gain = gain/6.25, 
+             loss = loss/6.25)]
 setorder(cdata, plot, year)
 cdata[, dT := c(diff(year), NA)]
 
 ## kohyama correction
-cdata[, BS0 := agb - awm*dT]
-cdata[, BT := agb + (awp-awm)*dT]
+cdata[, BS0 := agb - loss*dT]
+cdata[, BT := agb + (gain-loss)*dT]
 cdata[, awp := (log(BT/BS0)*(BT-agb))/(dT*log(BT/agb))]
 cdata[, awm := (log(agb/BS0)*(BT-agb))/(dT*log(BT/agb))]
 
 
-cdata = cdata[!is.na(awp), c("plot", "year", "agb", "awp", "awm")]
+cdata = cdata[!is.na(awp), c("plot", "year", "agb", "awp", "awm", "gain", "loss", "dT")]
 
 ## add treatment info
 cdata = merge(cdata, plot_data_prc, by = "plot")
-ggplot(cdata, aes(x=year, y=awp, group = plot, color=as.factor(treat)))+geom_point()+geom_line()
 
 ###### SAVE DATA #######
 save(cdata, file = "data/cdata.rda")

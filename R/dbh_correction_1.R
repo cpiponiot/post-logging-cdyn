@@ -1,8 +1,8 @@
-## test
-dat = subset(data,idtree=="prg_3_0_18005")
-X=dat$dbh
-tm=dat$year
-limit=10
+# ## test
+# dat = subset(data,idtree=="prg_3_0_18005")
+# X=dat$dbh
+# tm=dat$year
+# limit=10
 
 dbh_correction <- function(X, tm, limit=20, first_census=NULL) {
   # Xsav if for browser() use: save initial value of X
